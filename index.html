@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Κατακόρυφο Ελατήριο με Δύο Σώματα</title>
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --panel: #141414;
+      --text: #f0f0f0;
+      --accent: #00c080;
+      --red: #ff5555;
+      --blue: #6fc2ff;
+      --yellow: #f3cf8a;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    h1 {
+      text-align: center;
+      margin: 12px 0;
+      font-size: clamp(18px, 2.5vw, 26px);
+    }
+
+    /* ===== Layout ===== */
+    .app {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 12px;
+      padding: 10px;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== Canvas ===== */
+    #sketch-holder {
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    /* ===== Controls ===== */
+    #controls {
+      background: var(--panel);
+      padding: 12px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .control {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    label {
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    button {
+      padding: 8px;
+      font-size: 16px;
+      background: #222;
+      color: var(--text);
+      border: 1px solid #333;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #2a2a2a;
+    }
+
+    /* ===== Readout ===== */
+    #readout {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .read-col {
+      background: #0f0f0f;
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .unit {
+      opacity: 0.7;
+      font-size: 0.9em;
+    }
+
+    /* ===== Energy Panel ===== */
+    .energy-panel {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      height: 220px;
+    }
+
+    .bar-container {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .bar {
+      width: 100%;
+      background: #222;
+      border-radius: 6px 6px 0 0;
+      position: relative;
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .fill {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      transition: height 0.1s linear;
+    }
+
+    #Ubar { background: var(--blue); }
+    #Kbar { background: var(--yellow); }
+    #Ebar { background: #888; }
+
+    #energy-values {
+      margin-top: 8px;
+      font-size: 13px;
+      line-height: 1.4;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Κατακόρυφο Ιδανικό Ελατήριο – Δύο Σώματα</h1>
+
+  <div class="app">
+
+    <!-- Canvas -->
+    <div id="sketch-holder"></div>
+
+    <!-- Controls -->
+    <div id="controls">
+
+      <div class="energy-panel">
+        <div class="bar-container">
+          U
+          <div class="bar"><div class="fill" id="Ubar"></div></div>
+        </div>
+        <div class="bar-container">
+          K
+          <div class="bar"><div class="fill" id="Kbar"></div></div>
+        </div>
+        <div class="bar-container">
+          E
+          <div class="bar"><div class="fill" id="Ebar"></div></div>
+        </div>
+      </div>
+
+      <div id="energy-values"></div>
+
+      <!-- Τα sliders και το readout προστίθενται από το JS -->
+
+    </div>
+  </div>
+
+  <!-- Το JavaScript της προσομοίωσης -->
+  <script src="spring.js"></script>
+
+</body>
+</html>
