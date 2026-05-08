@@ -192,23 +192,29 @@ function drawMasses() {
 
 // =====================================================
 function drawReferenceLines() {
+  const labelOffset = 14;
+
   drawingContext.setLineDash([6, 6]);
 
+  // Φυσικό μήκος
   stroke(200, 80, 80);
   line(0, naturalY, width, naturalY);
   noStroke();
   fill(200, 80, 80);
-  text("Φυσικό μήκος", width * 0.55, naturalY - 6);
+  textAlign(LEFT, BOTTOM);
+  text("Φυσικό μήκος", width * 0.55, naturalY - labelOffset);
 
+  // Θέση ισορροπίας
   stroke(0, 200, 0);
+  drawingContext.setLineDash([6, 6]);
   line(0, eqY12, width, eqY12);
   noStroke();
   fill(0, 200, 0);
-  text("Θ.Ι. (Σ₁ + Σ₂)", width * 0.55, eqY12 - 6);
+  textAlign(LEFT, TOP);
+  text("Θ.Ι. (Σ₁ + Σ₂)", width * 0.55, eqY12 + labelOffset);
 
   drawingContext.setLineDash([]);
 }
-
 // =====================================================
 function drawStatusMessages() {
   textAlign(LEFT, TOP);
