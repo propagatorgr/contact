@@ -96,6 +96,7 @@ function computePhysics() {
 // =====================================================
 function draw() {
   background(15);
+  drawSliderLabels();      // ✅ ΕΠΑΝΑΦΟΡΑ LABELS
   computePhysics();
 
   drawStatusMessages();
@@ -240,6 +241,15 @@ function drawStatusMessages() {
   text("ω = √(k / (m₁ + m₂))", 20, height - 90);
   text("ω²A = " + (omega * omega * (A / scale)).toFixed(2), 20, height - 65);
   text("g = " + g, 20, height - 40);
+}
+
+function drawSliderLabels() {
+  fill(255);
+  textAlign(LEFT, BOTTOM);
+  textSize(14);
+
+  text("Πλάτος A (m)", 20, 45);
+  text("Γωνιακή συχνότητα ω (rad/s)", 20, 95);
 }
 
 
