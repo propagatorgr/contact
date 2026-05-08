@@ -1,3 +1,7 @@
+// =====================================================
+// Κατακόρυφο ελατήριο – δύο σώματα (Fullscreen)
+// =====================================================
+
 const g = 10;
 const scale = 100;
 const dt = 0.02;
@@ -22,11 +26,13 @@ let y1, y2, yPrev;
 let tDetach, yDetach, vDetach;
 let canDetach = false;
 
+// UI
 let ASlider, omegaSlider;
 let resetButton, continueButton;
 
+// =====================================================
 function setup() {
-  createCanvas(900, 600);
+  createCanvas(windowWidth, windowHeight);
   floorY = height - 40;
 
   ASlider = createSlider(0.05, 0.8, 0.25, 0.01);
@@ -49,9 +55,16 @@ function setup() {
   resetSimulation();
 }
 
+// =====================================================
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  floorY = height - 40;
+}
+
+// =====================================================
 function resetSimulation() {
   let w = omegaSlider.value();
-  let Amax = 0.8 * g / (w * w);
+  let Amax = 0.8 * g / (w * w);   // επιστροφή σε ασφαλή περιοχή
   Amax = constrain(Amax, 0.05, 0.8);
   ASlider.value(Amax);
 
@@ -62,6 +75,7 @@ function resetSimulation() {
   continueButton.hide();
 }
 
+// =====================================================
 function computePhysics() {
   omega = omegaSlider.value();
   A = ASlider.value() * scale;
@@ -69,14 +83,17 @@ function computePhysics() {
   k = omega * omega * (m1 + m2);
 
   naturalY = floorY - naturalLength * scale;
+
   const dL12 = (m1 + m2) * g / k;
   eqY12 = naturalY + dL12 * scale;
+
   const dL1 = m1 * g / k;
   eqY1 = naturalY + dL1 * scale;
 
   canDetach = omega * omega * (A / scale) > g;
 }
 
+// =====================================================
 function draw() {
   background(15);
   computePhysics();
@@ -93,6 +110,7 @@ function draw() {
   drawMasses();
 }
 
+// =====================================================
 function motionTogether() {
   t += dt;
 
@@ -117,12 +135,14 @@ function motionTogether() {
   yPrev = y1;
 }
 
+// =====================================================
 function continueMotion() {
   paused = false;
-  phase = 2;          // ⬅ περνάμε ΟΡΙΣΤΙΚΑ μετά την απώλεια επαφής
+  phase = 2;
   continueButton.hide();
 }
 
+// =====================================================
 function motionSeparated() {
   t += dt;
   const tau = t - tDetach;
@@ -142,28 +162,35 @@ function motionSeparated() {
     0.5 * g * scale * tau * tau;
 }
 
+// =====================================================
 function drawSpring() {
+  const x = width * 0.75;
+
   stroke(220);
   noFill();
   beginShape();
-  vertex(width * 0.75, floorY);
+  vertex(x, floorY);
   for (let i = 1; i <= 14; i++) {
     const y = lerp(floorY, y1, i / 14);
-    vertex(width * 0.75 + (i % 2 ? 14 : -14), y);
+    vertex(x + (i % 2 ? 14 : -14), y);
   }
-  vertex(width * 0.75, y1);
+  vertex(x, y1);
   endShape();
 }
 
+// =====================================================
 function drawMasses() {
+  const x = width * 0.75;
+
   rectMode(CENTER);
   fill(120, 160, 255);
-  rect(width * 0.75, y1, 70, H1, 6);
+  rect(x, y1, 70, H1, 6);
 
   fill(240, 200, 120);
-  rect(width * 0.75, y2, 60, H2, 6);
+  rect(x, y2, 60, H2, 6);
 }
 
+// =====================================================
 function drawReferenceLines() {
   drawingContext.setLineDash([6, 6]);
 
@@ -182,9 +209,7 @@ function drawReferenceLines() {
   drawingContext.setLineDash([]);
 }
 
-/* =========================
-   ΜΗΝΥΜΑΤΑ ΚΑΤΑΣΤΑΣΗΣ
-   ========================= */
+// =====================================================
 function drawStatusMessages() {
   textAlign(LEFT, TOP);
   fill(255);
@@ -204,12 +229,11 @@ function drawStatusMessages() {
     text("γιατί ω²A ≤ g", 20, 285);
   }
 
-  // ⬆️ ΔΕΝ ΥΠΑΡΧΕΙ ΠΙΑ το μήνυμα
-  // «Η επαφή μπορεί να χαθεί»
-
   fill(200);
   textSize(15);
   text("ω = √(k / (m₁ + m₂))", 20, height - 90);
   text("ω²A = " + (omega * omega * (A / scale)).toFixed(2), 20, height - 65);
   text("g = " + g, 20, height - 40);
 }
+
+
