@@ -253,9 +253,10 @@ function drawSliderLabels() {
   text("Γωνιακή συχνότητα ω (rad/s)", 20, 95);
 }
 function drawFloor() {
+  const visualFloorY = floorY + 20; // οπτικό πάτωμα χαμηλότερα
   stroke(160);
   strokeWeight(2);
-  line(width * 0.7, floorY, width * 0.85, floorY);
+  line(width * 0.7, visualFloorY, width * 0.85, visualFloorY);
   strokeWeight(1);
 }
 
