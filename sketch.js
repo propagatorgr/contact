@@ -109,6 +109,7 @@ function draw() {
 
   drawSpring();
   drawMasses();
+  drawFloor();
 }
 
 // =====================================================
@@ -251,5 +252,10 @@ function drawSliderLabels() {
   text("Πλάτος A (m)", 20, 45);
   text("Γωνιακή συχνότητα ω (rad/s)", 20, 95);
 }
-
+function drawFloor() {
+  stroke(160);
+  strokeWeight(2);
+  line(width * 0.7, floorY, width * 0.85, floorY);
+  strokeWeight(1);
+}
 
